@@ -85,7 +85,7 @@ const getMemberAll = (req, res) => {
     /* .paginate({ page: page }) */
     .exec()
     .then((data) => {
-      res.status(200).json({ data });
+      res.status(200).json({ members: data });
     })
     .catch((err) => {
       res.status(500).send({

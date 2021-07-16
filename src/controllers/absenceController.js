@@ -85,7 +85,7 @@ const getAbsenceAll = (req, res) => {
     /* .paginate({ page: page }) */
     .exec()
     .then((data) => {
-      res.status(200).json({ data });
+      res.status(200).json({ absences: data });
     })
     .catch((err) => {
       res.status(500).send({
