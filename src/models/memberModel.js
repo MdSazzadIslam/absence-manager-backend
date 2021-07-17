@@ -15,6 +15,7 @@ const MemberSchema = new mongoose.Schema(
 
     image: {
       type: String,
+      required: [true, "Image url is required"],
     },
 
     name: {

@@ -1,12 +1,13 @@
 const Absence = require("../models/absenceModel");
+const Member = require("../models/memberModel");
 
 const getAbsenceAll = (req, res) => {
-  let limit = 20;
+  let limit = req.query.limit;
   let offset = 0;
-  let page = 1;
+  let page = req.query.page;
   let condition = "";
   if (typeof req.query.limit !== "undefined") {
-    limit = parseInt(req.query.limit);
+    limit = parseInt(11);
   }
 
   if (typeof req.query.offset !== "undefined") {
@@ -14,7 +15,7 @@ const getAbsenceAll = (req, res) => {
   }
 
   if (typeof req.query.page !== "undefined") {
-    page = parseInt(req.query.page);
+    page = parseInt(req.query.page) * limit;
   }
 
   if (typeof req.query.tag !== "undefined") {
@@ -68,9 +69,9 @@ const getAbsenceAll = (req, res) => {
     .paginate({ page: page, limit: limit })
     .exec(); */
 
-  Absence
-    .find
-    /* {
+  //Absence
+  //.find
+  /* {
     $or: [
       { AbsenceName: req.query.AbsenceName },
       { contactPersonName: req.body.contactPersonName },
@@ -78,12 +79,36 @@ const getAbsenceAll = (req, res) => {
       { email: req.body.email },
     ],
   } */
-    ()
+  /*  ()
     .sort({ createdAt: -1 })
     .limit(Number(limit))
     .skip(Number(offset))
-    /* .paginate({ page: page }) */
-    .exec()
+    .populate("Member", "name image")
+    .populate("Member") */
+  /* .paginate({ page: page }) */
+  //  .exec()
+  //.then((data) => {
+  // Absence.countDocuments().then((count) => {
+  //   res.status(200).json({ absences: data, totalAbsence: count });
+  // });
+  // res.status(200).json({ absences: data });
+  //})
+  // .catch((err) => {
+  //res.status(500).send({
+  // msg: "Error occured while retriving the record" + err.message,
+  //});
+  // });
+
+  let promises = [
+    Absence.find({})
+      .sort({ userId: "asc" })
+      //.limit(Number(limit))
+      .skip(Number(page))
+      .exec(),
+    //Absence.countDocuments().exec(),
+    Member.find({}).exec(),
+  ];
+  Promise.all(promises)
     .then((data) => {
       res.status(200).json({ absences: data });
     })
