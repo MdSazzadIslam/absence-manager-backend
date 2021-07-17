@@ -5,104 +5,23 @@ const getAbsenceAll = (req, res) => {
   let limit = req.query.limit;
   let offset = 0;
   let page = req.query.page;
-  let condition = "";
+
   if (typeof req.query.limit !== "undefined") {
-    limit = parseInt(11);
+    limit = parseInt(req.query.limit);
   }
 
   if (typeof req.query.offset !== "undefined") {
-    offset = parseInt(req.query.offset);
+    offset = parseInt(req.query.page - 1) * parseInt(req.query.offset);
   }
 
   if (typeof req.query.page !== "undefined") {
-    page = parseInt(req.query.page) * limit;
+    page = parseInt(req.query.page);
   }
-
-  if (typeof req.query.tag !== "undefined") {
-    query.tagList = { $in: [req.query.tag] };
-  }
-
-  /*  const AbsenceName = req.query.AbsenceName;
-  const contactPersonName = req.query.contactPersonName;
-  const email = req.query.email;
-  const telephone = req.query.telephone;
-  console.log(AbsenceName);
-  if (typeof AbsenceName !== "undefined") {
-    condition = {
-      AbsenceName: { $regex: new RegExp(AbsenceName), $options: "i" },
-    };
-  }
-  if (typeof contactPersonName !== "undefined") {
-    condition =
-      condition +
-      {
-        contactPersonName: {
-          $regex: new RegExp(contactPersonName),
-          $options: "i",
-        },
-      };
-  }
-
-  if (typeof email !== "undefined") {
-    condition =
-      condition +
-      {
-        email: {
-          $regex: new RegExp(email),
-          $options: "i",
-        },
-      };
-  }
-
-  if (typeof telephone !== "undefined") {
-    condition =
-      condition +
-      {
-        telephone: {
-          $regex: new RegExp(telephone),
-          $options: "i",
-        },
-      };
-  } */
-
-  /* let articles = await Article.findAll()
-    .paginate({ page: page, limit: limit })
-    .exec(); */
-
-  //Absence
-  //.find
-  /* {
-    $or: [
-      { AbsenceName: req.query.AbsenceName },
-      { contactPersonName: req.body.contactPersonName },
-      { telephone: req.body.telephone },
-      { email: req.body.email },
-    ],
-  } */
-  /*  ()
-    .sort({ createdAt: -1 })
-    .limit(Number(limit))
-    .skip(Number(offset))
-    .populate("Member", "name image")
-    .populate("Member") */
-  /* .paginate({ page: page }) */
-  //  .exec()
-  //.then((data) => {
-  // Absence.countDocuments().then((count) => {
-  //   res.status(200).json({ absences: data, totalAbsence: count });
-  // });
-  // res.status(200).json({ absences: data });
-  //})
-  // .catch((err) => {
-  //res.status(500).send({
-  // msg: "Error occured while retriving the record" + err.message,
-  //});
-  // });
 
   let promises = [
     Absence.find({})
       .sort({ userId: "asc" })
-      //.limit(Number(limit))
+      .limit(Number(limit))
       .skip(Number(page))
       .exec(),
     //Absence.countDocuments().exec(),
@@ -110,7 +29,7 @@ const getAbsenceAll = (req, res) => {
   ];
   Promise.all(promises)
     .then((data) => {
-      res.status(200).json({ absences: data });
+      res.status(200).json({ absences: data, page: page });
     })
     .catch((err) => {
       res.status(500).send({
@@ -120,22 +39,55 @@ const getAbsenceAll = (req, res) => {
 };
 
 const getAbsenceById = (req, res) => {
-  console.log(req.query);
-  Absence.findById({ _id: req.params.id })
+  let firstLetter = req.params.id.charAt(0);
+  let page = req.query.page;
+
+  let promises = "";
+  if (isNaN(firstLetter) == false) {
+    console.log("date");
+    promises = [
+      Absence.find({
+        $or: [{ startDate: new Date(req.params.id) }],
+      })
+        .sort({ userId: "asc" })
+        .skip(Number(page))
+        .exec(),
+      //Absence.countDocuments().exec(),
+      Member.find({}).exec(),
+    ];
+  } else {
+    if (typeof req.params.id !== "undefined") {
+      condition = {
+        type: {
+          $regex: new RegExp(req.params.id),
+          $options: "i",
+        },
+      };
+    }
+    promises = [
+      Absence.find(condition)
+        .sort({ userId: "asc" })
+        //.limit(Number(limit))
+        .skip(Number(page))
+        .exec(),
+      //Absence.countDocuments().exec(),
+      Member.find({}).exec(),
+    ];
+  }
+
+  Promise.all(promises)
     .then((data) => {
       if (!data) {
         res
           .status(404)
           .send({ msg: `No record found for id =${req.params.id} ` });
       } else {
-        res.status(200).json({ data });
+        res.status(200).json({ absences: data });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        msg:
-          `Error occured while retriving record for id = ${req.params.id} ` +
-          err.message,
+        msg: "Error occured while retriving the record" + err.message,
       });
     });
 };
