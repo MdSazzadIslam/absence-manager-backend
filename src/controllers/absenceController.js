@@ -26,7 +26,7 @@ const getAbsenceAll = (req, res) => {
       .limit(Number(limit))
       .skip(Number(page))
       .exec(),
-    //Absence.countDocuments().exec(),
+    Absence.countDocuments().exec(),
     Member.find({}).exec(),
   ];
   Promise.all(promises)
