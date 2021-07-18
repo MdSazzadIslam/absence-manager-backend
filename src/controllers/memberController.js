@@ -1,3 +1,5 @@
+"use strict";
+
 const Member = require("../models/memberModel");
 
 const getMemberAll = (req, res) => {

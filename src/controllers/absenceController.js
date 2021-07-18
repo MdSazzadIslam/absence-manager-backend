@@ -1,3 +1,5 @@
+"use strict";
+
 const Absence = require("../models/absenceModel");
 const Member = require("../models/memberModel");
 
@@ -42,7 +44,8 @@ const getAbsenceById = (req, res) => {
   let firstLetter = req.params.id.charAt(0);
   let page = req.query.page;
 
-  let promises = "";
+  let promises = "",
+    condition = "";
   if (isNaN(firstLetter) == false) {
     console.log("date");
     promises = [

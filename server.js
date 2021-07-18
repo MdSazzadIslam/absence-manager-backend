@@ -8,6 +8,10 @@ const db = process.env.MONGO_URI;
   connect(db);
 })();
 
+process.on("uncaughtException", (err) => {
+  console.log(`Uncaught Exception ${err}`);
+});
+
 app.get("/", (req, res) => {
   res.send("API is running");
 });
