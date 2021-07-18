@@ -4,7 +4,6 @@ Absence manager backend using Node.js, Express.js &amp; MongoDB.
 ## Tech
 
 - Node.js
-- JavaScript
 - Express
 - MongoDB
 - Test: Mocha & Chai
@@ -23,18 +22,15 @@ Absence manager backend using Node.js, Express.js &amp; MongoDB.
 The easiest way to get started is to clone the repository:
 
 Git Clone
+
 git clone --depth=1 https://github.com/MdSazzadIslam/absence-manager-backend.git
 
 Install NPM dependencies
+
 npm install or yarn install
 
 Then simply start your app
+
 npm run dev
 
 [N.B -> Please add mongodb connection string in .env file]
-
-Don't forget to give this repo a ⭐ if you like and want to appreciate my efforts
-
-
-
-Don't forget to give this repo a ⭐ if you like and want to appreciate my efforts
