@@ -7,7 +7,7 @@ Absence manager backend using Node.js, Express.js &amp; MongoDB.
 - JavaScript
 - Express
 - MongoDB
-- Tests: Mocha & Chai
+- Test: Mocha & Chai
 
 
 ## Product Requirements
