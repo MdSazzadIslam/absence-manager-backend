@@ -1,7 +1,7 @@
 version: "1"
 services:
-    user:
-        build: './user'
+    web:
+        build: '.'
         ports:
             -"5000:5000"
             depends_on: 
@@ -9,22 +9,3 @@ services:
             environment:
                     -MONGO_URI = 
                 
-    products:
-        build: './products'
-        ports:
-            -"5001:5001"
-            depends_on: 
-                    - db
-            environment:
-                    -MONGO_URI =  
-
-    orders:
-        build: './orders'
-        ports:
-            -"5002:5002"
-            depends_on:
-                -db
-                -user
-                -product
-                environment:
-                    -MONGO_URI =  
