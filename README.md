@@ -27,7 +27,7 @@ git clone --depth=1 https://github.com/MdSazzadIslam/absence-manager-backend.git
 
 Install NPM dependencies
 
-npm install or yarn install
+npm install
 
 Then simply start your app
 
