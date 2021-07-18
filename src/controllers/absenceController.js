@@ -47,15 +47,18 @@ const getAbsenceById = (req, res) => {
   let promises = "",
     condition = "";
   if (isNaN(firstLetter) == false) {
-    console.log("date");
     promises = [
       Absence.find({
-        $or: [{ startDate: new Date(req.params.id) }],
+        $or: [
+          { startDate: new Date(req.params.id) },
+          { endDate: new Date(req.params.id) },
+          { confirmedAt: new Date(req.params.id) },
+          { rejectedAt: new Date(req.params.id) },
+        ],
       })
         .sort({ userId: "asc" })
         .skip(Number(page))
         .exec(),
-      //Absence.countDocuments().exec(),
       Member.find({}).exec(),
     ];
   } else {
@@ -68,12 +71,7 @@ const getAbsenceById = (req, res) => {
       };
     }
     promises = [
-      Absence.find(condition)
-        .sort({ userId: "asc" })
-        //.limit(Number(limit))
-        .skip(Number(page))
-        .exec(),
-      //Absence.countDocuments().exec(),
+      Absence.find(condition).sort({ userId: "asc" }).skip(Number(page)).exec(),
       Member.find({}).exec(),
     ];
   }
