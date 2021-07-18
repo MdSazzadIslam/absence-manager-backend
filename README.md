@@ -1,15 +1,7 @@
 # absence-manager-backend
 Absence manager backend using Node.js, Express.js &amp; MongoDB.
 
-## Instruction
-- Clone the 
-
-# Please clone the project
-# Install node modules - npm i or yarn i
-# Add MongoDB Connection in .env file.
-# run the project - npm start or yarn start
-
-## Tech Requirements
+## Tech
 
 - Node.js
 - JavaScript
@@ -18,7 +10,7 @@ Absence manager backend using Node.js, Express.js &amp; MongoDB.
 - Test: Mocha & Chai
 
 
-## Product Requirements
+## Features
 
 - [ ] I want to see a list of absences including the names of the employees.
 - [ ] I want to see the first 10 absences, with the ability to paginate.
