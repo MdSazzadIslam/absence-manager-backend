@@ -1,6 +1,14 @@
 # absence-manager-backend
 Absence manager backend using Node.js, Express.js &amp; MongoDB.
 
+## Instruction
+- Clone the 
+
+# Please clone the project
+# Install node modules - npm i or yarn i
+# Add MongoDB Connection in .env file.
+# run the project - npm start or yarn start
+
 ## Tech Requirements
 
 - Node.js
@@ -17,6 +25,23 @@ Absence manager backend using Node.js, Express.js &amp; MongoDB.
 - [ ] I want to see a total number of absences.
 - [ ] I want to filter absences by type.
 - [ ] I want to filter absences by date.
+
+
+
+The easiest way to get started is to clone the repository:
+
+Git Clone
+git clone --depth=1 https://github.com/MdSazzadIslam/absence-manager-backend.git
+
+Install NPM dependencies
+npm install or yarn install
+
+Then simply start your app
+npm run dev
+
+[N.B -> Please add mongodb connection string in .env file]
+
+Don't forget to give this repo a ⭐ if you like and want to appreciate my efforts
 
 
 
