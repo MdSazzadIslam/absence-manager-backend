@@ -6,7 +6,6 @@ const getMemberAll = (req, res) => {
   let limit = 20;
   let offset = 0;
   let page = 1;
-  let condition = "";
   if (typeof req.query.limit !== "undefined") {
     limit = parseInt(req.query.limit);
   }
@@ -23,68 +22,11 @@ const getMemberAll = (req, res) => {
     query.tagList = { $in: [req.query.tag] };
   }
 
-  /* const MemberName = req.query.MemberName;
-  const contactPersonName = req.query.contactPersonName;
-  const email = req.query.email;
-  const telephone = req.query.telephone;
-  console.log(MemberName);
-  if (typeof MemberName !== "undefined") {
-    condition = {
-      MemberName: { $regex: new RegExp(MemberName), $options: "i" },
-    };
-  }
-  if (typeof contactPersonName !== "undefined") {
-    condition =
-      condition +
-      {
-        contactPersonName: {
-          $regex: new RegExp(contactPersonName),
-          $options: "i",
-        },
-      };
-  }
-
-  if (typeof email !== "undefined") {
-    condition =
-      condition +
-      {
-        email: {
-          $regex: new RegExp(email),
-          $options: "i",
-        },
-      };
-  }
-
-  if (typeof telephone !== "undefined") {
-    condition =
-      condition +
-      {
-        telephone: {
-          $regex: new RegExp(telephone),
-          $options: "i",
-        },
-      };
-  } */
-
-  /* let articles = await Article.findAll()
-    .paginate({ page: page, limit: limit })
-    .exec(); */
-
-  Member
-    .find
-    /* {
-    $or: [
-      { MemberName: req.query.MemberName },
-      { contactPersonName: req.body.contactPersonName },
-      { telephone: req.body.telephone },
-      { email: req.body.email },
-    ],
-  } */
-    ()
+  Member.find({})
     .sort({ createdAt: -1 })
     .limit(Number(limit))
     .skip(Number(offset))
-    /* .paginate({ page: page }) */
+
     .exec()
     .then((data) => {
       res.status(200).json({ members: data });
